@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive AOP Map</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      font-family: Calibri, sans-serif;
+      overflow: hidden;
+    }
+
+    .map-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .map-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: top left;
+    }
+
+    .map-inner img {
+      width: 2000px;
+      height: 3010px;
+      pointer-events: none;
+      display: block;
+    }
+
+    .map-inner svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2000px;
+      height: 3010px;
+      pointer-events: none;
+    }
+
+    .zone {
+      fill: transparent;
+      pointer-events: all;
+      transition: fill 0.2s ease;
+    }
+
+    .zone.dimmed {
+      fill: rgba(0, 0, 0, 0.5);
+    }
+
+    .zone:hover {
+      fill: rgba(255, 255, 255, 0.1);
+    }
+
+    .info-tooltip {
+      position: fixed;
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 6px;
+      line-height: 1.4;
+      max-width: 260px;
+      z-index: 1000;
+      pointer-events: none;
+      display: none;
+      font-family: Calibri, sans-serif;
+      white-space: normal;
+    }
+
+    .instructions {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 6px;
+      line-height: 1.5;
+      max-width: 240px;
+      z-index: 10;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="map-container" id="mapContainer">
+  <div class="instructions">
+    <strong>Map Instructions:</strong><br />
+    🖱️ Scroll to zoom<br />
+    🖱️ Click + drag to pan<br />
+    🖱️ Hover zones for info
+  </div>
+
+  <div class="map-inner" id="mapInner">
+    <img src="map.png" alt="AOP Map" />
+
+    <svg viewBox="0 0 2000 3010">
+  <!--<polygon class="zone" data-label="Waikanae" points="-2,960,191,958,298,881,452,769,579,716,686,662,870,611,812,656,922,566,930,510,945,466,971,438,986,412,1018,389,1044,361,1033,320,1020,282,1014,234,1018,187,1014,138,1001,104,986,80,977,59,967,37,954,16,950,3,-2,3,-2,945" />-->
+  
+  <polygon class="zone" data-label="Greater Wellington" points="-2,960,191,958,298,881,452,769,579,716,686,662,870,611,812,656,922,566,930,510,945,466,971,438,986,412,1018,389,1044,361,1033,320,1020,282,1014,234,1018,187,1014,138,1001,104,986,80,977,59,967,37,954,16,950,3,-2,3,-2,945,0,1788,58,1794,120,1816,165,1837,221,1859,242,1865,259,1878,292,1882,330,1874,356,1854,371,1824,390,1786,418,1758,448,1752,482,1754,512,1773,551,1769,579,1745,592,1713,609,1691,626,1672,665,1668,701,1668,718,1698,737,1726,755,1740,795,1747,830,1736,842,1721,857,1734,881,1740,907,1729,930,1729,945,1755,969,1764,992,1764,1012,1759,1031,1762,1044,1749,1063,1740,1089,1740,1100,1753,1125,1764,1153,1766,1177,1768,1179,1785,1190,1805,1203,1811,1213,1824,1226,1835,1241,1845,1252,1880,1258,1903,1284,1918,1308,1918,1323,1905,1331,1890,1340,1871,1348,1854,1353,1837,1372,1828,1389,1822,1408,1822,1426,1832,1445,1852,1468,1871,1501,1880,1554,1875,1593,1867,1618,1858,1646,1860,1715,1863,1996,1863,1998,0,952,2,986,77,1001,100,1012,131,1014,158,1018,186,1012,221,1016,259,1027,303,1042,356,1014,388,984,408,971,436,941,464,920,570,864,611,684,665,444,772,189,956,-2,960" />
+  
+  <polygon class="zone" data-label="West Wellington" points="0,1791,58,1795,124,1816,186,1846,242,1866,274,1881,326,1874,352,1855,371,1816,382,1795,399,1774,420,1756,478,1752,506,1771,542,1769,568,1754,581,1741,594,1711,626,1673,701,1666,740,1726,780,1741,810,1741,832,1731,842,1718,860,1733,890,1735,909,1726,928,1726,947,1752,977,1763,1010,1759,1029,1759,1044,1801,1040,1825,1035,1862,1044,1926,1044,1964,1044,2004,1031,2049,1020,2064,969,2059,960,2077,935,2149,924,2197,909,2231,900,2252,892,2291,868,2293,851,2336,849,2355,845,2394,827,2435,808,2465,778,2498,752,2515,695,2560,677,2573,645,2594,602,2609,544,2650,459,2820,461,2878,482,2908,512,2934,570,2983,574,3009,0,3009" />
+  
+  <polygon class="zone" data-label="East Wellington" points="574,3006,570,2983,482,2907,461,2877,457,2819,544,2650,635,2581,720,2521,770,2495,821,2446,842,2384,857,2324,862,2300,885,2287,900,2266,907,2225,920,2199,932,2167,943,2120,952,2090,960,2073,977,2055,1008,2058,1018,2066,1035,2030,1042,2000,1042,1935,1038,1877,1038,1821,1040,1797,1029,1761,1061,1742,1089,1744,1113,1757,1143,1763,1175,1767,1188,1804,1215,1830,1243,1845,1256,1900,1284,1915,1310,1918,1329,1898,1340,1875,1346,1849,1361,1832,1398,1823,1428,1830,1447,1855,1466,1868,1501,1879,1548,1875,1588,1866,1621,1855,1719,1862,1994,1864,1998,3010" />
+</svg>
+
+  </div>
+
+  <div class="info-tooltip" id="tooltipBox"></div>
+</div>
+
+<script>
+  const tooltip = document.getElementById('tooltipBox');
+  const zones = document.querySelectorAll('.zone');
+
+  const descriptions = {
+    "Greater Wellington": "Greater Wellington = Waikanae, Otaki, Paraparaumu, Paekakariki, Porirua.",
+    "West Wellington": "West Wellington = Kelburn, Te Aro. (If AOP is set to Wellington City it is both West + East Wellington Zones merged.)",
+    "East Wellington": "East Wellington = Hutt City, Thorndon, Petone. (If AOP is set to Wellington City it is both West + East Wellington Zones merged.)",
+  };
+
+  zones.forEach(zone => {
+    zone.addEventListener('mouseenter', () => {
+      zones.forEach(z => {
+        if (z !== zone) z.classList.add('dimmed');
+        else z.classList.remove('dimmed');
+      });
+
+      const label = zone.getAttribute('data-label');
+      tooltip.textContent = descriptions[label] || label;
+      tooltip.style.display = 'block';
+    });
+
+    zone.addEventListener('mousemove', e => {
+      requestAnimationFrame(() => {
+        const padding = 12;
+        const w = tooltip.offsetWidth;
+        const h = tooltip.offsetHeight;
+        let left = e.clientX + padding;
+        let top = e.clientY - h / 2;
+
+        // Clamp to prevent overflow
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        if (left + w > viewportWidth) left = viewportWidth - w - padding;
+        if (top + h > viewportHeight) top = viewportHeight - h;
+        if (top < 0) top = 0;
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+      });
+    });
+
+    zone.addEventListener('mouseleave', () => {
+      zones.forEach(z => z.classList.remove('dimmed'));
+      tooltip.style.display = 'none';
+    });
+  });
+
+  // Pan & Zoom logic
+  const mapInner = document.getElementById('mapInner');
+  let scale = 0.5;
+  let origin = { x: 0, y: 0 };
+  let isPanning = false;
+  let start = { x: 0, y: 0 };
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  function updateTransform() {
+    const container = document.getElementById('mapContainer');
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const imageWidth = 2000 * scale;
+    const imageHeight = 3010 * scale;
+
+    const maxX = 0;
+    const maxY = 0;
+    const minX = containerWidth - imageWidth;
+    const minY = containerHeight - imageHeight;
+
+    origin.x = clamp(origin.x, minX, maxX);
+    origin.y = clamp(origin.y, minY, maxY);
+
+    mapInner.style.transform = `translate(${origin.x}px, ${origin.y}px) scale(${scale})`;
+  }
+
+  updateTransform();
+
+  document.getElementById('mapContainer').addEventListener('wheel', e => {
+    e.preventDefault();
+    const factor = e.deltaY > 0 ? 0.9 : 1.1;
+    scale *= factor;
+    scale = Math.min(4, Math.max(0.5, scale));
+    updateTransform();
+  });
+
+  document.getElementById('mapContainer').addEventListener('mousedown', e => {
+    isPanning = true;
+    start.x = e.clientX - origin.x;
+    start.y = e.clientY - origin.y;
+  });
+
+  document.addEventListener('mouseup', () => isPanning = false);
+  document.addEventListener('mousemove', e => {
+    if (!isPanning) return;
+    origin.x = e.clientX - start.x;
+    origin.y = e.clientY - start.y;
+    updateTransform();
+  });
+</script>
+
+</body>
+</html>
