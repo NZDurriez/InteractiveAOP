@@ -18,6 +18,7 @@
       height: 100vh;
       overflow: hidden;
       user-select: none;
+      touch-action: none;
     }
 
     .map-inner {
@@ -50,7 +51,7 @@
     }
 
     .zone.dimmed {
-      fill: rgba(0, 0, 0, 0.5);
+      fill: rgba(0, 0, 0, 0.6);
     }
 
     .zone:hover {
@@ -95,36 +96,113 @@
   <div class="instructions">
     <strong>Map Instructions:</strong><br />
     🖱️ Scroll to zoom<br />
+    🤏 Pinch to zoom (touch)<br />
     🖱️ Click + drag to pan<br />
     🖱️ Hover zones for info
   </div>
 
   <div class="map-inner" id="mapInner">
     <img src="map.png" alt="AOP Map" />
-
     <svg viewBox="0 0 2000 3010">
-  <!--<polygon class="zone" data-label="Waikanae" points="-2,960,191,958,298,881,452,769,579,716,686,662,870,611,812,656,922,566,930,510,945,466,971,438,986,412,1018,389,1044,361,1033,320,1020,282,1014,234,1018,187,1014,138,1001,104,986,80,977,59,967,37,954,16,950,3,-2,3,-2,945" />-->
-  
-  <polygon class="zone" data-label="Greater Wellington" points="-2,960,191,958,298,881,452,769,579,716,686,662,870,611,812,656,922,566,930,510,945,466,971,438,986,412,1018,389,1044,361,1033,320,1020,282,1014,234,1018,187,1014,138,1001,104,986,80,977,59,967,37,954,16,950,3,-2,3,-2,945,0,1788,58,1794,120,1816,165,1837,221,1859,242,1865,259,1878,292,1882,330,1874,356,1854,371,1824,390,1786,418,1758,448,1752,482,1754,512,1773,551,1769,579,1745,592,1713,609,1691,626,1672,665,1668,701,1668,718,1698,737,1726,755,1740,795,1747,830,1736,842,1721,857,1734,881,1740,907,1729,930,1729,945,1755,969,1764,992,1764,1012,1759,1031,1762,1044,1749,1063,1740,1089,1740,1100,1753,1125,1764,1153,1766,1177,1768,1179,1785,1190,1805,1203,1811,1213,1824,1226,1835,1241,1845,1252,1880,1258,1903,1284,1918,1308,1918,1323,1905,1331,1890,1340,1871,1348,1854,1353,1837,1372,1828,1389,1822,1408,1822,1426,1832,1445,1852,1468,1871,1501,1880,1554,1875,1593,1867,1618,1858,1646,1860,1715,1863,1996,1863,1998,0,952,2,986,77,1001,100,1012,131,1014,158,1018,186,1012,221,1016,259,1027,303,1042,356,1014,388,984,408,971,436,941,464,920,570,864,611,684,665,444,772,189,956,-2,960" />
-  
-  <polygon class="zone" data-label="West Wellington" points="0,1791,58,1795,124,1816,186,1846,242,1866,274,1881,326,1874,352,1855,371,1816,382,1795,399,1774,420,1756,478,1752,506,1771,542,1769,568,1754,581,1741,594,1711,626,1673,701,1666,740,1726,780,1741,810,1741,832,1731,842,1718,860,1733,890,1735,909,1726,928,1726,947,1752,977,1763,1010,1759,1029,1759,1044,1801,1040,1825,1035,1862,1044,1926,1044,1964,1044,2004,1031,2049,1020,2064,969,2059,960,2077,935,2149,924,2197,909,2231,900,2252,892,2291,868,2293,851,2336,849,2355,845,2394,827,2435,808,2465,778,2498,752,2515,695,2560,677,2573,645,2594,602,2609,544,2650,459,2820,461,2878,482,2908,512,2934,570,2983,574,3009,0,3009" />
-  
-  <polygon class="zone" data-label="East Wellington" points="574,3006,570,2983,482,2907,461,2877,457,2819,544,2650,635,2581,720,2521,770,2495,821,2446,842,2384,857,2324,862,2300,885,2287,900,2266,907,2225,920,2199,932,2167,943,2120,952,2090,960,2073,977,2055,1008,2058,1018,2066,1035,2030,1042,2000,1042,1935,1038,1877,1038,1821,1040,1797,1029,1761,1061,1742,1089,1744,1113,1757,1143,1763,1175,1767,1188,1804,1215,1830,1243,1845,1256,1900,1284,1915,1310,1918,1329,1898,1340,1875,1346,1849,1361,1832,1398,1823,1428,1830,1447,1855,1466,1868,1501,1879,1548,1875,1588,1866,1621,1855,1719,1862,1994,1864,1998,3010" />
-</svg>
-
+      <polygon class="zone" data-label="Greater Wellington" points="-2,1797,141,1827,191,1844,219,1862,246,1871,279,1867,302,1860,332,1846,348,1823,360,1791,385,1763,415,1747,459,1731,475,1754,503,1774,532,1763,551,1747,574,1716,592,1693,613,1679,636,1668,660,1663,696,1673,729,1707,750,1730,777,1731,807,1731,833,1728,856,1742,881,1753,904,1747,925,1742,939,1747,957,1769,994,1784,1026,1777,1058,1770,1088,1769,1118,1779,1142,1790,1164,1806,1195,1829,1209,1846,1209,1864,1216,1878,1232,1880,1248,1880,1271,1880,1294,1880,1317,1881,1365,1874,1391,1859,1423,1848,1441,1848,1455,1866,1467,1880,1492,1881,1524,1871,1548,1867,1582,1862,1617,1862,1645,1864,1688,1864,1998,1869,1998,4,1954,0,1908,-2,-2,0,0,104" />
+      <polygon class="zone" data-label="Wellington City" points="-2,2337,0,1795,80,1811,159,1832,193,1843,219,1860,244,1869,290,1862,320,1850,332,1843,346,1823,355,1795,374,1769,401,1751,434,1737,459,1731,472,1749,502,1772,528,1761,549,1744,577,1705,588,1689,623,1671,660,1661,692,1670,745,1724,766,1728,803,1730,833,1726,883,1751,925,1740,939,1746,955,1765,991,1783,1047,1769,1086,1767,1119,1779,1156,1800,1188,1823,1209,1843,1211,1871,1236,1874,1296,1880,1340,1874,1361,1874,1398,1853,1439,1846,1464,1874,1492,1880,1524,1869,1577,1860,1998,1869,1998,2940,1998,3008,0,3009,-2,2919" />
+      <polygon class="zone" data-label="Waikanae/Otaki" points="171,307,159,212,129,106,140,67,191,44,237,46,274,42,320,27,360,21,408,32,445,58,464,85,486,117,512,132,542,148,558,169,570,185,607,191,643,196,669,207,692,222,720,249,736,261,763,268,793,275,825,284,846,297,878,295,906,291,923,307,955,307,999,311,1028,334,1035,365,1010,387,994,399,976,422,955,452,941,464,929,485,923,507,929,530,925,554,918,572,904,584,883,588,867,602,863,618,842,637,809,641,782,641,750,646,712,637,682,630,667,605,639,609,618,620,611,642,613,672,602,687,576,687,533,694,507,680,494,651,480,632,454,628,422,628,406,639,397,657,392,687,385,713,376,747,366,777,300,808,274,817,200,821,145,815,99,800,58,778,43,747,39,694,36,614,44,560,76,545,87,517,76,498,44,448,32,381,34,353,55,304,127,314" />
+    </svg>
   </div>
 
   <div class="info-tooltip" id="tooltipBox"></div>
 </div>
 
 <script>
+  const mapInner = document.getElementById('mapInner');
+  let scale = 0.5;
+  let origin = { x: 0, y: 0 };
+  let isPanning = false;
+  let start = { x: 0, y: 0 };
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  function updateTransform() {
+    mapInner.style.transform = `translate(${origin.x}px, ${origin.y}px) scale(${scale})`;
+  }
+
+  // Mouse wheel zoom
+  document.getElementById('mapContainer').addEventListener('wheel', e => {
+    e.preventDefault();
+    const rect = mapInner.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const prevScale = scale;
+    const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+
+    scale *= zoomFactor;
+    scale = Math.min(4, Math.max(0.5, scale));
+
+    origin.x -= (mouseX / prevScale) * (scale - prevScale);
+    origin.y -= (mouseY / prevScale) * (scale - prevScale);
+
+    updateTransform();
+  });
+
+  // Pan with mouse
+  document.getElementById('mapContainer').addEventListener('mousedown', e => {
+    isPanning = true;
+    start.x = e.clientX - origin.x;
+    start.y = e.clientY - origin.y;
+  });
+
+  document.addEventListener('mouseup', () => isPanning = false);
+  document.addEventListener('mousemove', e => {
+    if (!isPanning) return;
+    origin.x = e.clientX - start.x;
+    origin.y = e.clientY - start.y;
+    updateTransform();
+  });
+
+  // Pinch zoom
+  let pinchDist = 0;
+  document.getElementById('mapContainer').addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      pinchDist = Math.sqrt(dx * dx + dy * dy);
+    }
+  });
+
+  document.getElementById('mapContainer').addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const newDist = Math.sqrt(dx * dx + dy * dy);
+      const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+      const rect = mapInner.getBoundingClientRect();
+      const relX = centerX - rect.left;
+      const relY = centerY - rect.top;
+
+      const zoomFactor = newDist > pinchDist ? 1.05 : 0.95;
+      const prevScale = scale;
+      scale *= zoomFactor;
+      scale = Math.min(4, Math.max(0.5, scale));
+      pinchDist = newDist;
+
+      origin.x -= (relX / prevScale) * (scale - prevScale);
+      origin.y -= (relY / prevScale) * (scale - prevScale);
+
+      updateTransform();
+    }
+  }, { passive: false });
+
+  // Tooltip on hover
   const tooltip = document.getElementById('tooltipBox');
   const zones = document.querySelectorAll('.zone');
 
   const descriptions = {
-    "Greater Wellington": "Greater Wellington = Waikanae, Otaki, Paraparaumu, Paekakariki, Porirua.",
-    "West Wellington": "West Wellington = Kelburn, Te Aro. (If AOP is set to Wellington City it is both West + East Wellington Zones merged.)",
-    "East Wellington": "East Wellington = Hutt City, Thorndon, Petone. (If AOP is set to Wellington City it is both West + East Wellington Zones merged.)",
+    "Greater Wellington": "Greater Wellington includes the entire northern region including Waikanae and surrounding towns.",
+    "Wellington City": "Wellington City includes both East and West Wellington zones merged.",
+    "Waikanae/Otaki": "Waikanae and Otaki are part of the northern area of Greater Wellington."
   };
 
   zones.forEach(zone => {
@@ -147,7 +225,6 @@
         let left = e.clientX + padding;
         let top = e.clientY - h / 2;
 
-        // Clamp to prevent overflow
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
         if (left + w > viewportWidth) left = viewportWidth - w - padding;
@@ -165,56 +242,7 @@
     });
   });
 
-  // Pan & Zoom logic
-  const mapInner = document.getElementById('mapInner');
-  let scale = 0.5;
-  let origin = { x: 0, y: 0 };
-  let isPanning = false;
-  let start = { x: 0, y: 0 };
-
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-  function updateTransform() {
-    const container = document.getElementById('mapContainer');
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
-    const imageWidth = 2000 * scale;
-    const imageHeight = 3010 * scale;
-
-    const maxX = 0;
-    const maxY = 0;
-    const minX = containerWidth - imageWidth;
-    const minY = containerHeight - imageHeight;
-
-    origin.x = clamp(origin.x, minX, maxX);
-    origin.y = clamp(origin.y, minY, maxY);
-
-    mapInner.style.transform = `translate(${origin.x}px, ${origin.y}px) scale(${scale})`;
-  }
-
   updateTransform();
-
-  document.getElementById('mapContainer').addEventListener('wheel', e => {
-    e.preventDefault();
-    const factor = e.deltaY > 0 ? 0.9 : 1.1;
-    scale *= factor;
-    scale = Math.min(4, Math.max(0.5, scale));
-    updateTransform();
-  });
-
-  document.getElementById('mapContainer').addEventListener('mousedown', e => {
-    isPanning = true;
-    start.x = e.clientX - origin.x;
-    start.y = e.clientY - origin.y;
-  });
-
-  document.addEventListener('mouseup', () => isPanning = false);
-  document.addEventListener('mousemove', e => {
-    if (!isPanning) return;
-    origin.x = e.clientX - start.x;
-    origin.y = e.clientY - start.y;
-    updateTransform();
-  });
 </script>
 
 </body>
